@@ -1,0 +1,4 @@
+Relatório de Testes de Raiz Unitária - Autor: Luiz Tiago Wilcke
+ADF p-value: 0.293565
+KPSS p-value: 0.010000
+PP p-value: 0.091362
