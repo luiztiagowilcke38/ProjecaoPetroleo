@@ -23,30 +23,40 @@ O projeto é calcado em rigor econométrico e avanços de deep learning. Algumas
 
 ### 1. Transformação de Box-Cox e Log-Retorno
 Para atingir a estacionaridade da variância, aplicamos o logaritmo natural na razão dos preços \( P \), garantindo que os retornos \( R_t \) espelhem o retorno contínuo:
+
 $$ R_t = \ln\left(\frac{P_t}{P_{t-1}}\right) $$
 
 ### 2. Multi-Layer Perceptron (MLP)
 Nos módulos básicos (12 e 13), dado o vetor de lags de entrada $X \in \mathbb{R}^{n}$, a saída $Y$ de uma camada oculta é computada via função de ativação ReLU ($f(x) = \max(0, x)$):
+
 $$ H = f(W_1 X + b_1) $$
+
 $$ \hat{Y} = W_2 H + b_2 $$
 
 ### 3. Long Short-Term Memory (LSTM)
 No Módulo 14, as células LSTM mitigam o dissipamento de gradiente aprendendo fluxos lógicos de longo prazo. A equação da "Gated Forget Cell" é definida como:
+
 $$ f_t = \sigma(W_f \cdot [h_{t-1}, x_t] + b_f) $$
+
 E a atualização do estado da célula:
+
 $$ C_t = f_t * C_{t-1} + i_t * \tilde{C}_t $$
 
 ### 4. Gated Recurrent Unit (GRU)
 Mais eficiente em datasets menores, o Módulo 15 computa a porta de atualização $z_t$:
+
 $$ z_t = \sigma(W_z \cdot [h_{t-1}, x_t] + b_z) $$
+
 $$ h_t = (1 - z_t) * h_{t-1} + z_t * \tilde{h}_t $$
 
 ### 5. Mecanismo de Atenção (Attention Mechanism)
 Implementado no Módulo 18, os pesos neurais se concentram temporalmente nos "picos de relevância", derivando os vetores *Query* ($Q$), *Key* ($K$) e *Value* ($V$):
+
 $$ \text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V $$
 
 ### 6. Volatilidade GARCH(1,1) Híbrida
 Para compor as variâncias financeiras, usamos o clássico GARCH(1,1) incorporado (via feature proxy) na inteligência artificial:
+
 $$ \sigma_t^2 = \omega + \alpha \epsilon_{t-1}^2 + \beta \sigma_{t-1}^2 $$
 
 ## Principais Tecnologias e Pacotes R
